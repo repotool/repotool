@@ -1,0 +1,56 @@
+{
+  "name": "repotool",
+  "description": "Toolbelt for repetitive repository maintenance tasks",
+  "main": "index.js",
+  "bin": {
+    "repotool": "bin/repotool.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "codecov": "codecov",
+    "lint": "eslint .",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justmoon/repotool.git"
+  },
+  "keywords": [
+    "repository",
+    "npm",
+    "package"
+  ],
+  "author": "Stefan Thomas <justmoon@members.fsf.org>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justmoon/repotool/issues"
+  },
+  "homepage": "https://github.com/justmoon/repotool#readme",
+  "dependencies": {
+    "bluebird": "^3.4.3",
+    "co": "^4.6.0",
+    "fetch": "^1.1.0",
+    "node-fetch": "^1.6.0",
+    "tv4": "^1.2.7",
+    "yargs": "^5.0.0"
+  },
+  "devDependencies": {
+    "codecov": "^1.0.1",
+    "cz-conventional-changelog": "^1.2.0",
+    "eslint": "^3.4.0",
+    "eslint-config-standard": "^6.0.0",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "ghooks": "^1.3.2",
+    "validate-commit-msg": "^2.8.0",
+    "semantic-release": "^4.3.5"
+  },
+  "config": {
+    "ghooks": {
+      "commit-msg": "validate-commit-msg"
+    },
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
