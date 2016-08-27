@@ -1,5 +1,6 @@
 {
   "name": "repotool",
+  "version": "0.0.0-semantic-release",
   "description": "Toolbelt for repetitive repository maintenance tasks",
   "main": "index.js",
   "bin": {
