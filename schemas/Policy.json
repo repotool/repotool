@@ -2,6 +2,12 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
     "plugins": {
       "type": "array",
       "items": {
@@ -18,6 +24,8 @@
     }
   },
   "required": [
+    "name",
+    "version",
     "plugins"
   ]
 }
