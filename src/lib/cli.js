@@ -6,9 +6,13 @@ const tv4 = require('tv4')
 const Promise = require('bluebird')
 const merge = require('lodash/merge')
 const mapValues = require('lodash/mapValues')
+const zipObject = require('lodash/zipObject')
+const omit = require('lodash/omit')
+const isUndefined = require('lodash/isUndefined')
+const isFunction = require('lodash/isFunction')
 
 const PLUGIN_DEFAULTS = {
-  hooks: () => ({}),
+  hooks: {},
   validate: () => true,
   predict: () => {},
   execute: () => {}
@@ -87,19 +91,37 @@ class Cli {
   }
 
   getHooks (plugins) {
-    return Promise.mapSeries(plugins, (plugin) => {
-      return (typeof plugin.hooks === 'function') ? plugin.hooks() : plugin.hooks
+    const hooksByPlugin = plugins.map((plugin) => {
+      return mapValues(plugin.hooks, (hook) => [hook])
     })
-      .then((hooks) => {
-        return hooks.reduce(merge, {})
-      })
-      .then((hooks) => {
-        // Ensure all hooks are functions
-        return mapValues(
-          hooks,
-          (hook) => (typeof hook === 'function' ? hook : () => Promise.resolve(hook))
-        )
-      })
+
+    function customizer (objValue, srcValue) {
+      if (Array.isArray(objValue)) {
+        return objValue.concat(srcValue)
+      }
+    }
+
+    const hooks = mergeWith({}, ...hooksByPlugin, customizer)
+
+    function getHook (hookName) {
+      const hook = hooks[hookName]
+
+      if (hook) return Promise.mapSeries(hook, (cb) => isFunction(cb) ? cb() : cb)
+    }
+
+    return (requestedHooks) => {
+      if (Array.isArray(requestedHooks)) {
+        return Promise.mapSeries(requestedHooks, (hookName) => {
+          return getHook(hookName)
+        })
+          .then((resolvedHooks) => {
+            return zipObject(requestedHooks, resolvedHooks)
+          })
+          .then(omit(isUndefined))
+      } else {
+        return getHook(requestedHooks)
+      }
+    }
   }
 
   validateState (plugins, hooks) {
