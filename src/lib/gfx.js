@@ -26,3 +26,45 @@ exports.logStepHeadline = (headline) => {
   console.info(chalk.bold(headline))
   // console.info()
 }
+
+exports.replaceLastLine = () => {
+  const ansiCodes = '\x1b[1F\x1b[2K'
+  process.stdout.write(ansiCodes)
+}
+
+exports.detectOutput = () => {
+  const state = {
+    tripped: false,
+    reset
+  }
+
+  const oldStdoutWrite = process.stdout.write
+  const oldStderrWrite = process.stderr.write
+
+  function newStdoutWrite () {
+    state.tripped = true
+    oldStdoutWrite.apply(this, arguments)
+    reset()
+  }
+
+  function newStderrWrite () {
+    state.tripped = true
+    oldStderrWrite.apply(this, arguments)
+    reset()
+  }
+
+  function reset () {
+    if (process.stdout.write === newStdoutWrite) {
+      process.stdout.write = oldStdoutWrite
+    }
+
+    if (process.stderr.write === newStderrWrite) {
+      process.stderr.write = oldStderrWrite
+    }
+  }
+
+  process.stdout.write = newStdoutWrite
+  process.stderr.write = newStderrWrite
+
+  return state
+}

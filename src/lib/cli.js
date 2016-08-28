@@ -101,7 +101,7 @@ class Cli {
     }
 
     console.info()
-    console.info(chalk.green(' success') + ' Using policy ' +
+    console.info(chalk.green('       ✔') + ' Using policy ' +
       chalk.bold(policy.name + '@' + policy.version))
 
     this.policy = policy
@@ -188,10 +188,24 @@ class Cli {
     // results during validation
     console.info()
     return Promise.filter(plugins, (plugin) => {
+      console.info(chalk.grey('--------') + ' ' + chalk.grey(plugin.module))
+
+      // We'll check if the plugin prints anything. If not, we can delete the
+      // log line above and have pretty one-line output per plugin.
+      const detector = gfx.detectOutput()
       return Promise.resolve(plugin.validate(hooks))
         .then(result => {
-          console.info(chalk.grey('      =>') + ' ' + plugin.module + ' ' +
-            (result ? chalk.green.bold('✓') : chalk.yellow.bold('needs changes')))
+          if (result) {
+            if (!detector.tripped) {
+              gfx.replaceLastLine()
+            } else {
+              detector.reset()
+            }
+            console.info(chalk.green('       ✔') + ' ' +
+              plugin.module + ' ' + chalk.green('passed'))
+          } else {
+            console.info(chalk.yellow('       ✘ needs changes'))
+          }
           return !result
         })
     }, { concurrency: 1 })
@@ -199,18 +213,18 @@ class Cli {
 
   predictActions (plugins, hooks) {
     console.info()
-    return Promise.all(plugins.map((plugin) => {
-      console.info(chalk.grey('--------') + ' ' + plugin.module + ':')
-      plugin.predict(hooks)
-    }))
+    return Promise.each(plugins, (plugin) => {
+      console.info(chalk.grey('--------') + ' ' + chalk.grey(plugin.module))
+      return plugin.predict(hooks)
+    })
   }
 
   executeActions (plugins, hooks) {
     console.info()
-    return Promise.all(plugins.map((plugin) => {
-      console.info(chalk.grey('--------') + ' ' + plugin.module + ':')
+    return Promise.each(plugins, (plugin) => {
+      console.info(chalk.grey('--------') + ' ' + chalk.grey(plugin.module))
       return plugin.execute(hooks)
-    }))
+    })
   }
 }
 
