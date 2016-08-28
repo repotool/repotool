@@ -5,19 +5,31 @@ const chalk = require('chalk')
 // ASCII Art by the legendary Christopher Johnson
 // http://www.chris.com/ascii/index.php?art=transportation/trucks
 
-const truck = `
-                   ______________________________________________________
-                  |      ____  __________  ____  __________  ____  __    |
-             /    |     / __ \\/ ____/ __ \\/ __ \\/_  __/ __ \\/ __ \\/ /    |
-            /---, |    / /_/ / __/ / /_/ / / / / / / / / / / / / / /     |
-       -----# ==| |   / _, _/ /___/ ____/ /_/ / / / / /_/ / /_/ / /___   |
-       | :) # ==| |  /_/ |_/_____/_/    \\____/ /_/  \\____/\\____/_____/   |
-  -----'----#   | |______________________________________________________|
-  |)___()  '#   |______====____   \\___________________________________|
- [_/,-,\\"--"------ //,-,  ,-,\\\\\\   |/             //,-,  ,-,  ,-,\\\\ __#
-   ( 0 )|===******||( 0 )( 0 )||-  o              '( 0 )( 0 )( 0 )||
-----'-'--------------'-'--'-'-----------------------'-'--'-'--'-'--------------
-`
+const truckColor = chalk.white
+const driverColor = chalk.yellow.dim
+const wheelColor = chalk.white
+const wheelInnerColor = chalk.grey
+const ventColor = chalk.grey
+const roadColor = chalk.grey
+const windowColor = chalk.cyan.dim
+const frontLightColor = chalk.yellow.bold
+const rearLightColor = chalk.red
+const billboardInnerColor = chalk.white.bold
+const billboardOuterColor = chalk.red
+
+const truck = [
+  '                   ' + billboardOuterColor('______________________________________________________'),
+  '                  ' + billboardOuterColor('|') + billboardInnerColor('      ____  __________  ____  __________  ____  __    ') + billboardOuterColor('|'),
+  '             ' + truckColor('/') + '    ' + billboardOuterColor('|') + billboardInnerColor('     / __ \\/ ____/ __ \\/ __ \\/_  __/ __ \\/ __ \\/ /    ') + billboardOuterColor('|'),
+  '            ' + truckColor('/---,') + ' ' + billboardOuterColor('|') + billboardInnerColor('    / /_/ / __/ / /_/ / / / / / / / / / / / / / /     ') + billboardOuterColor('|'),
+  '       ' + truckColor('-----# ') + ventColor('==') + truckColor('|') + ' ' + billboardOuterColor('|') + billboardInnerColor('   / _, _/ /___/ ____/ /_/ / / / / /_/ / /_/ / /___   ') + billboardOuterColor('|'),
+  '       ' + windowColor('|') + driverColor(' :) ') + truckColor('# ') + ventColor('==') + truckColor('|') + ' ' + billboardOuterColor('|') + billboardInnerColor('  /_/ |_/_____/_/    \\____/ /_/  \\____/\\____/_____/   ') + billboardOuterColor('|'),
+  '  ' + truckColor('-----\'----#   |') + ' ' + billboardOuterColor('|______________________________________________________|'),
+  '  ' + frontLightColor('|') + truckColor(')___()  \'#   |______====____   \\___________________________________|'),
+  ' ' + truckColor('[_/') + wheelColor(',-,') + truckColor('\\"--"------ //') + wheelColor(',-,  ,-,') + truckColor('\\\\\\   |/             //') + wheelColor(',-,  ,-,  ,-,') + truckColor('\\\\ __') + rearLightColor('#'),
+  '   ' + wheelColor('( ') + wheelInnerColor('0') + wheelColor(' )') + truckColor('|===******||') + wheelColor('( ') + wheelInnerColor('0') + wheelColor(' )( ') + wheelInnerColor('0') + wheelColor(' )') + truckColor('||-  o              \'') + wheelColor('( ') + wheelInnerColor('0') + wheelColor(' )( ') + wheelInnerColor('0') + wheelColor(' )( ') + wheelInnerColor('0') + wheelColor(' )') + truckColor('||'),
+  roadColor('----') + wheelColor('\'-\'') + roadColor('--------------') + wheelColor('\'-\'') + roadColor('--') + wheelColor('\'-\'') + roadColor('-----------------------') + wheelColor('\'-\'') + roadColor('--') + wheelColor('\'-\'') + roadColor('--') + wheelColor('\'-\'') + roadColor('--------------')
+].join('\n')
 
 exports.renderTruck = () => console.log(truck)
 
