@@ -10,26 +10,28 @@ const driverColor = chalk.yellow.dim
 const wheelColor = chalk.white
 const wheelInnerColor = chalk.grey
 const ventColor = chalk.grey
+const doorHandleColor = chalk.grey
 const roadColor = chalk.grey
 const windowColor = chalk.cyan.dim
 const frontLightColor = chalk.yellow.bold
 const rearLightColor = chalk.red
 const billboardInnerColor = chalk.white.bold
 const billboardOuterColor = chalk.red
+const ul = chalk.underline
 
 const truck = [
   '                   ' + billboardOuterColor('______________________________________________________'),
   '                  ' + billboardOuterColor('|') + billboardInnerColor('      ____  __________  ____  __________  ____  __    ') + billboardOuterColor('|'),
   '             ' + truckColor('/') + '    ' + billboardOuterColor('|') + billboardInnerColor('     / __ \\/ ____/ __ \\/ __ \\/_  __/ __ \\/ __ \\/ /    ') + billboardOuterColor('|'),
   '            ' + truckColor('/---,') + ' ' + billboardOuterColor('|') + billboardInnerColor('    / /_/ / __/ / /_/ / / / / / / / / / / / / / /     ') + billboardOuterColor('|'),
-  '       ' + truckColor('-----# ') + ventColor('==') + truckColor('|') + ' ' + billboardOuterColor('|') + billboardInnerColor('   / _, _/ /___/ ____/ /_/ / / / / /_/ / /_/ / /___   ') + billboardOuterColor('|'),
-  '       ' + windowColor('|') + driverColor(' :) ') + truckColor('# ') + ventColor('==') + truckColor('|') + ' ' + billboardOuterColor('|') + billboardInnerColor('  /_/ |_/_____/_/    \\____/ /_/  \\____/\\____/_____/   ') + billboardOuterColor('|'),
-  '  ' + truckColor('-----\'----#   |') + ' ' + billboardOuterColor('|______________________________________________________|'),
-  '  ' + frontLightColor('|') + truckColor(')___()  \'#   |______====____   \\___________________________________|'),
-  ' ' + truckColor('[_/') + wheelColor(',-,') + truckColor('\\"--"------ //') + wheelColor(',-,  ,-,') + truckColor('\\\\\\   |/             //') + wheelColor(',-,  ,-,  ,-,') + truckColor('\\\\ __') + rearLightColor('#'),
-  '   ' + wheelColor('( ') + wheelInnerColor('0') + wheelColor(' )') + truckColor('|===******||') + wheelColor('( ') + wheelInnerColor('0') + wheelColor(' )( ') + wheelInnerColor('0') + wheelColor(' )') + truckColor('||-  o              \'') + wheelColor('( ') + wheelInnerColor('0') + wheelColor(' )( ') + wheelInnerColor('0') + wheelColor(' )( ') + wheelInnerColor('0') + wheelColor(' )') + truckColor('||'),
+  '       ' + truckColor('-----╢ ') + ventColor('==') + truckColor('|') + ' ' + billboardOuterColor('|') + billboardInnerColor('   / _  _/ /___/ ____/ /_/ / / / / /_/ / /_/ / /___   ') + billboardOuterColor('|'),
+  '       ' + windowColor('|') + driverColor(' :) ') + truckColor('║ ') + ventColor('==') + truckColor('|') + ' ' + billboardOuterColor('|') + '  ' + billboardInnerColor(ul('/') + '_/ ╲_/_____/_/    \\____/ /_/  \\____/\\____/_____/   ') + billboardOuterColor('|'),
+  ' ' + truckColor('╭-----┼----╢   |') + ' ' + billboardOuterColor('|______________________________________________________|'),
+  ' ' + frontLightColor('┃') + truckColor(') ___╰╮  ') + doorHandleColor('°') + truckColor('║   |_____' + chalk.underline('.====.') + '___   \\___________________________________|'),
+  ' ' + truckColor('[_/') + wheelColor(',-,') + truckColor('\\╰---╯----- //') + wheelColor(',-,  ,-,') + truckColor('\\\\\\   |/             //') + wheelColor(',-,  ,-,  ,-,') + truckColor('\\\\ __') + rearLightColor('#'),
+  '   ' + wheelColor('( ') + wheelInnerColor('@') + wheelColor(' )') + truckColor('|' + chalk.underline('===******') + '||') + wheelColor('( ') + wheelInnerColor('@') + wheelColor(' )( ') + wheelInnerColor('@') + wheelColor(' )') + truckColor('||-  °              \'') + wheelColor('( ') + wheelInnerColor('@') + wheelColor(' )( ') + wheelInnerColor('@') + wheelColor(' )( ') + wheelInnerColor('@') + wheelColor(' )') + truckColor('||'),
   roadColor('----') + wheelColor('\'-\'') + roadColor('--------------') + wheelColor('\'-\'') + roadColor('--') + wheelColor('\'-\'') + roadColor('-----------------------') + wheelColor('\'-\'') + roadColor('--') + wheelColor('\'-\'') + roadColor('--') + wheelColor('\'-\'') + roadColor('--------------')
-].join('\n')
+].join('\n').replace(/\/_/g, ul('╱') + '_').replace(/_/g, chalk.underline(' ')).replace(/\//g, '╱').replace(/\\/g, '╲').replace(/\|/g, '│').replace(/-/g, '─').replace(/=/g, '═')
 
 exports.renderTruck = () => console.log(truck)
 
