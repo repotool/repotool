@@ -8,10 +8,8 @@ const inquirer = require('inquirer')
 const Promise = require('bluebird')
 const semverRegex = require('semver-regex')
 const mergeWith = require('lodash/mergeWith')
-const mapValues = require('lodash/mapValues')
+const mapValues = require('lodash/fp/mapValues')
 const zipObject = require('lodash/zipObject')
-const omit = require('lodash/omit')
-const isUndefined = require('lodash/isUndefined')
 const isFunction = require('lodash/isFunction')
 
 const gfx = require('./gfx')
@@ -151,7 +149,7 @@ class Cli {
 
   getHooks (plugins) {
     const hooksByPlugin = plugins.map((plugin) => {
-      return mapValues(plugin.hooks, (hook) => [hook])
+      return mapValues((hook) => [hook], plugin.hooks)
     })
 
     function customizer (objValue, srcValue) {
@@ -165,7 +163,11 @@ class Cli {
     function getHook (hookName) {
       const hook = hooks[hookName]
 
-      if (hook) return Promise.mapSeries(hook, (cb) => isFunction(cb) ? cb() : cb)
+      if (hook) {
+        return Promise.mapSeries(hook, (cb) => isFunction(cb) ? cb() : cb)
+      } else {
+        return Promise.resolve([])
+      }
     }
 
     return (requestedHooks) => {
@@ -176,7 +178,6 @@ class Cli {
           .then((resolvedHooks) => {
             return zipObject(requestedHooks, resolvedHooks)
           })
-          .then(omit(isUndefined))
       } else {
         return getHook(requestedHooks)
       }
@@ -204,7 +205,8 @@ class Cli {
             console.info(chalk.green('       ✔') + ' ' +
               plugin.module + ' ' + chalk.green('passed'))
           } else {
-            console.info(chalk.yellow('       ✘ needs changes'))
+            console.info(chalk.yellow('       ✘') + ' ' + plugin.module + ' ' +
+              chalk.yellow('needs changes'))
           }
           return !result
         })
