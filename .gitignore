@@ -2,3 +2,5 @@
 /npm-debug.log*
 .lock-wscript
 /.tags*
+/typings/
+/dist/

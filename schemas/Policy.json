@@ -8,24 +8,12 @@
     "version": {
       "type": "string"
     },
-    "plugins": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "module": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "module"
-        ]
-      }
+    "hooks": {
+      "type": "object"
     }
   },
   "required": [
     "name",
-    "version",
-    "plugins"
+    "version"
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "globalDependencies": {
+    "node": "registry:dt/node#6.0.0+20160909174046",
+    "tv4": "registry:dt/tv4#1.2.5+20160317120654"
+  },
+  "globalDevDependencies": {
+    "chai": "registry:dt/chai#3.4.0+20160601211834",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353"
+  },
+  "dependencies": {
+    "bluebird": "registry:npm/bluebird#3.4.1+20160909132857",
+    "inquirer": "registry:npm/inquirer#1.0.0+20160723033700",
+    "mz": "registry:npm/mz#2.4.0+20160911015431",
+    "yargs": "registry:npm/yargs#5.0.0+20160907000723"
+  }
+}
